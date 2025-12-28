@@ -457,8 +457,8 @@
       if(idx<pages.length-1){ block+='<w:p><w:r><w:br w:type="page"/></w:r></w:p>'; }
     });
     zip.file(relPath,rels);
-    const tokenPara=new RegExp(`<w:p[^>]*>[\\s\\S]*?${escapeRegExp(PHOTO_TOKEN)}[\\s\\S]*?<\\/w:p>`);
-    if(tokenPara.test(docXml)) docXml=docXml.replace(tokenPara,block);
+    const tokenPara=`<w:p><w:r><w:t>${PHOTO_TOKEN}</w:t></w:r></w:p>`;
+    if(docXml.indexOf(tokenPara) !== -1) docXml=docXml.replace(tokenPara,block);
     else docXml=docXml.replace(/<\/w:body>\s*<\/w:document>/,block+'</w:body></w:document>');
     zip.file('word/document.xml',docXml);
   }
